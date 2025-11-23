@@ -1,36 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios, { isAxiosError } from 'axios'
-
-interface IEmployee {
-  id: number;
-  firstName: string;
-  lastName: string;
-  position: string;
-}
+import { fetchAllEmployees } from '../services/employeeService.ts';
+import type { IEmployee } from '../models/Employee.ts';
 
 const employees = ref<IEmployee[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
-const API_URL = 'http://localhost:8080/api/employees';
 
 onMounted(async () => {
   try {
-    const response = await axios.get(API_URL);
-    
-    employees.value = response.data;
-    loading.value = false;
+    employees.value = await fetchAllEmployees(); 
   } catch (err) {
+    error.value = (err as Error).message; 
+  } finally {
     loading.value = false;
-    
-    if (isAxiosError(err)) {
-      error.value = 'Kunde inte hämta anställda: ' + 
-        (err.response 
-          ? `Serverfel (${err.response.status})` 
-          : 'Kan inte nå Java-servern (Är den igång?)');
-    } else {
-      error.value = 'Ett oväntat fel uppstod.';
-    }
   }
 })
 </script>
