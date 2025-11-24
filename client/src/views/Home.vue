@@ -30,8 +30,8 @@ onMounted(async () => {
   <div class="max-w-7xl mx-auto p-6 space-y-6">
     <h1 class="text-3xl font-bold text-gray-50">Välkommen!</h1>
     <div v-if="employees.length > 0">
-      <EmployeeList />
       <Dashboard /> 
+      <EmployeeList />     
     </div>
   </div>
 </template>

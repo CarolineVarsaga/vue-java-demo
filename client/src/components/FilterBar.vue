@@ -25,7 +25,20 @@ watch(localSort, val => emit("update:sortKey", val));
 
 <template>
   <div class="mb-6 flex flex-wrap gap-4 items-center">
-    <div class="flex flex-col">
+    <div class="flex flex-col grow max-w-[200px]">
+      <label class="text-sm font-medium text-gray-700 mb-1">Sortering</label>
+       <select
+        :value="props.sortKey"
+        @change="$emit('update:sortKey', ($event.target as HTMLSelectElement).value)"
+        class="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300 bg-white"
+      >
+        <option value="firstName">Förnamn</option>
+        <option value="lastName">Efternamn</option>
+        <option value="position">Titel</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col grow max-w-[200px]">
       <label class="text-sm font-medium text-gray-700 mb-1">Välj yrke</label>
        <select
         :value="props.selectedPosition"
@@ -48,19 +61,6 @@ watch(localSort, val => emit("update:sortKey", val));
         placeholder="Sök på namn..."
         class="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300 bg-white"
       />
-    </div>
-
-    <div class="flex flex-col">
-      <label class="text-sm font-medium text-gray-700 mb-1">Sortering</label>
-       <select
-        :value="props.sortKey"
-        @change="$emit('update:sortKey', ($event.target as HTMLSelectElement).value)"
-        class="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-300 bg-white"
-      >
-        <option value="firstName">Förnamn</option>
-        <option value="lastName">Efternamn</option>
-        <option value="position">Titel</option>
-      </select>
     </div>
 
   </div>
