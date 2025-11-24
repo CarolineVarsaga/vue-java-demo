@@ -21,7 +21,7 @@ const emit = defineEmits<{
     >
       <thead class="bg-gray-100 text-gray-700 text-sm uppercase font-semibold">
         <tr>
-          <th class="px-4 py-3 text-left">ID</th>
+          <th class="px-6 py-3 text-left">ID</th>
           <th class="px-4 py-3 text-left">Förnamn</th>
           <th class="px-4 py-3 text-left">Efternamn</th>
           <th class="px-4 py-3 text-left">Titel</th>
@@ -36,7 +36,7 @@ const emit = defineEmits<{
           @click="() => emit('openModal', emp)"
           class="border-b hover:bg-gray-50 cursor-pointer transition"
         >
-          <td class="px-4 py-3 text-gray-800">{{ emp.id }}</td>
+          <td class="px-6 py-3 text-gray-800">{{ emp.id }}</td>
           <td class="px-4 py-3 text-gray-800">{{ emp.firstName }}</td>
           <td class="px-4 py-3 text-gray-800">{{ emp.lastName }}</td>
           <td class="px-4 py-3 text-gray-800">{{ emp.position }}</td>

@@ -64,7 +64,7 @@ function closeModal() {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="max-w-6xl mx-auto p-6 space-y-6">
     <h2 class="text-2xl font-bold text-gray-50">Anställda hämtade från Java Backend</h2>
     <p v-if="loading" class="text-gray-600">Laddar anställda...</p>
 
