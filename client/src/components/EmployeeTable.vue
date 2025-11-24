@@ -44,7 +44,7 @@ const emit = defineEmits<{
           <td class="px-4 py-3 text-center">
             <button
               @click.stop="() => emit('toggleFavorite', emp)"
-              class="text-xl hover:scale-125 transition-transform"
+              class="text-3xl hover:scale-125 transition-transform cursor-pointer"
               :class="props.favorites.has(emp.id) ? 'text-yellow-400' : 'text-gray-400'"
             >
               {{ props.favorites.has(emp.id) ? '⭐' : '☆' }}
