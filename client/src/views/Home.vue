@@ -3,6 +3,7 @@ import { ref, provide, onMounted } from "vue";
 import EmployeeList from "../components/EmployeeList.vue";
 import { fetchAllEmployees } from "../services/employeeService";
 import type { IEmployee } from "../models/Employee";
+import Dashboard from "../components/Dashboard.vue";
 
 const employees = ref<IEmployee[]>([]);
 const positions = ref<string[]>([]);
@@ -30,6 +31,7 @@ onMounted(async () => {
     <h1 class="text-3xl font-bold text-gray-50">Välkommen!</h1>
     <div v-if="employees.length > 0">
       <EmployeeList />
+      <Dashboard /> 
     </div>
   </div>
 </template>
