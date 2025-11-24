@@ -2,6 +2,9 @@ package se.carolinevarsaga.demoproject.vue_java_app.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 
 @Data
@@ -13,4 +16,5 @@ public class Employee {
   private String firstName;
   private String lastName;
   private String position;
+  private LocalDate createdAt;
 }
