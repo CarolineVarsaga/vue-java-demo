@@ -1,36 +1,38 @@
 package se.carolinevarsaga.demoproject.vue_java_app.service;
 
+import se.carolinevarsaga.demoproject.vue_java_app.DTO.EmployeeStatsDto;
+import se.carolinevarsaga.demoproject.vue_java_app.mock.MockEmployees;
 import se.carolinevarsaga.demoproject.vue_java_app.model.Employee;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 @Service
 public class EmployeeService {
   public List<Employee> findAll() {
-    // --- Dummy Data ---
-    List<Employee> employees = new ArrayList<>();
-    employees.add(new Employee(1L, "Anna", "Svensson", "Utvecklare"));
-    employees.add(new Employee(2L, "Erik", "Nilsson", "Projektledare"));
-    employees.add(new Employee(3L, "Karin", "Larsson", "UX Designer"));
-    employees.add(new Employee(4L, "Kurt", "Berg", "Projektledare"));
-    employees.add(new Employee(5L, "Lotta", "Andersson", "UX Designer"));
-    employees.add(new Employee(6L, "Jerry", "Klar", "UX Designer"));
-    employees.add(new Employee(7L, "Sara", "Holm", "Utvecklare"));
-    employees.add(new Employee(8L, "Peter", "Johansson", "Testare"));
-    employees.add(new Employee(9L, "Eva", "Sundberg", "Utvecklare"));
-    employees.add(new Employee(10L, "Magnus", "Lind", "Projektledare"));
-    employees.add(new Employee(11L, "Carina", "Björk", "UX Designer"));
-    employees.add(new Employee(12L, "Thomas", "Hansson", "Testare"));
-    employees.add(new Employee(13L, "Linda", "Karlsson", "Utvecklare"));
-    employees.add(new Employee(14L, "Johan", "Fredriksson", "Projektledare"));
-    employees.add(new Employee(15L, "Maria", "Nyström", "UX Designer"));
-    employees.add(new Employee(16L, "Anders", "Olsson", "Utvecklare"));
-    employees.add(new Employee(17L, "Sofia", "Lund", "Testare"));
-    employees.add(new Employee(18L, "Björn", "Åberg", "Projektledare"));
-    employees.add(new Employee(19L, "Kristin", "Ek", "UX Designer"));
-    employees.add(new Employee(20L, "Henrik", "Pettersson", "Utvecklare"));
+    return MockEmployees.getMockEmployees();
+  }
 
-    return employees;
+  public EmployeeStatsDto getStatistics() {
+
+    List<Employee> all = findAll();
+    long total = all.size();
+
+    Map<String, Long> perPosition = all.stream()
+        .collect(Collectors.groupingBy(Employee::getPosition, Collectors.counting()));
+
+    long last30days = all.stream()
+        .filter(e -> e.getCreatedAt().isAfter(LocalDate.now().minusDays(30)))
+        .count();
+
+    List<String> top5 = perPosition.entrySet().stream()
+        .sorted((a, b) -> Long.compare(b.getValue(), a.getValue()))
+        .limit(5)
+        .map(Map.Entry::getKey)
+        .toList();
+
+    return new EmployeeStatsDto(total, perPosition, last30days, top5);
   }
 }
