@@ -1,9 +1,10 @@
 import axios from "axios";
 import { isAxiosError } from "axios";
-import type { IEmployee } from "../models/Employee.ts";
+import type { IEmployee, IStats } from "../models/Employee.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const EMPLOYEE_URL = `${API_BASE_URL}/employees`;
+const EMPLOYEE_STATS_URL = `${API_BASE_URL}/stats`;
 
 export async function fetchAllEmployees(): Promise<IEmployee[]> {
   try {
@@ -17,5 +18,17 @@ export async function fetchAllEmployees(): Promise<IEmployee[]> {
       );
     }
     throw new Error("Ett oväntat nätverksfel inträffade.");
+  }
+}
+
+export async function getStats(): Promise<IStats> {
+  try {
+    const response = await axios.get(EMPLOYEE_STATS_URL);
+    return response.data;
+  } catch (error: any) {
+    console.error("StatsService error:", error);
+    throw new Error(
+      error.response?.data?.message || "Kunde inte hämta statistik"
+    );
   }
 }
