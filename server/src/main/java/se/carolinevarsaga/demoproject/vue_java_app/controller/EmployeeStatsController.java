@@ -1,6 +1,6 @@
 package se.carolinevarsaga.demoproject.vue_java_app.controller;
 
-import se.carolinevarsaga.demoproject.vue_java_app.DTO.EmployeeStatsDto;
+import se.carolinevarsaga.demoproject.vue_java_app.repository.EmployeeStatsDto;
 import se.carolinevarsaga.demoproject.vue_java_app.service.EmployeeService;
 
 import org.springframework.web.bind.annotation.GetMapping;
