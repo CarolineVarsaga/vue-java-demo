@@ -2,10 +2,9 @@ package se.carolinevarsaga.demoproject.vue_java_app.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
-
-import lombok.AllArgsConstructor;
 
 @Data
 @NoArgsConstructor
