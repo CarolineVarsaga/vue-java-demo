@@ -9,5 +9,4 @@ public class VueJavaAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VueJavaAppApplication.class, args);
 	}
-
 }
