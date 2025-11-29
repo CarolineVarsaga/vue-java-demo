@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const EMPLOYEE_URL = `${API_BASE_URL}/employees`;
 const EMPLOYEE_STATS_URL = `${API_BASE_URL}/stats`;
 
-export async function fetchAllEmployees(): Promise<IEmployee[]> {
+export const fetchAllEmployees = async (): Promise<IEmployee[]> => {
   try {
     const response = await axios.get<IEmployee[]>(EMPLOYEE_URL);
     return response.data;
@@ -19,9 +19,9 @@ export async function fetchAllEmployees(): Promise<IEmployee[]> {
     }
     throw new Error("Ett oväntat nätverksfel inträffade.");
   }
-}
+};
 
-export async function getStats(): Promise<IStats> {
+export const getStats = async (): Promise<IStats> => {
   try {
     const response = await axios.get(EMPLOYEE_STATS_URL);
     return response.data;
@@ -31,4 +31,4 @@ export async function getStats(): Promise<IStats> {
       error.response?.data?.message || "Kunde inte hämta statistik"
     );
   }
-}
+};

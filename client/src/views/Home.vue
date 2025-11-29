@@ -9,7 +9,7 @@ const employees = ref<IEmployee[]>([]);
 const positions = ref<string[]>([]);
 
 const selectedPosition = ref("");
-function setPosition(pos: string) {
+const setPosition = (pos: string) => {
   selectedPosition.value = pos;
 }
 
