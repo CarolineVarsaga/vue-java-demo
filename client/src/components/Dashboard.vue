@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import type { Chart } from "chart.js";
-import ChartJS from "chart.js/auto";
+import PositionBarChart from "./PositionBarChart.vue";
 import { getStats } from "../services/employeeService.ts";
 import type { IStats } from "../models/Employee.ts";
 
 const stats = ref<IStats | null>(null);
 const loading = ref(true);
 const error = ref<string | null>(null);
-let chart: Chart | null = null;
 
 const fetchStats = async () => {
   loading.value = true;
@@ -16,41 +14,11 @@ const fetchStats = async () => {
 
   try {
     stats.value = await getStats();
-    initChart(); 
   } catch (err: any) {
     error.value = err.message;
   } finally {
     loading.value = false;
   }
-};
-
-const initChart = () => {
-  if (!stats.value) return;
-
-  const ctx = document.getElementById("positionChart") as HTMLCanvasElement;
-  if (!ctx) return;
-
-  if (chart) chart.destroy();
-
-  chart = new ChartJS(ctx, {
-    type: "bar",
-    data: {
-      labels: Object.keys(stats.value.employeesPerPosition),
-      datasets: [
-        {
-          label: "Antal anställda per position",
-          data: Object.values(stats.value.employeesPerPosition),
-          backgroundColor: "#3b82f6", 
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-      },
-    },
-  });
 };
 
 onMounted(() => {
@@ -84,8 +52,9 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="bg-white shadow-md rounded-lg p-6 mt-6">
-      <canvas id="positionChart"></canvas>
-    </div>
+    <PositionBarChart 
+      v-if="stats" 
+      :employees-per-position="stats.employeesPerPosition" 
+    />
   </div>
 </template>
