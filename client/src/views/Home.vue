@@ -7,6 +7,8 @@ import Dashboard from "../components/Dashboard.vue";
 
 const employees = ref<IEmployee[]>([]);
 const positions = ref<string[]>([]);
+const error = ref<string | null>(null);
+provide("error", error);
 
 const selectedPosition = ref("");
 const setPosition = (pos: string) => {
@@ -19,10 +21,13 @@ provide("selectedPosition", selectedPosition);
 provide("setPosition", setPosition);
 
 onMounted(async () => {
-  const data = await fetchAllEmployees();
-  employees.value = data;
-
-  positions.value = [...new Set(data.map(emp => emp.position))];
+  try {
+    const data = await fetchAllEmployees();
+    employees.value = data;
+    positions.value = [...new Set(data.map(emp => emp.position))];
+  } catch (err) {
+    error.value = "Kunde inte hämta anställda";
+  }
 });
 </script>
 
