@@ -7,5 +7,5 @@ public record EmployeeDto(
     String firstName,
     String lastName,
     String position,
-    LocalDate createdAt) {
+    LocalDate hireDate) {
 }
