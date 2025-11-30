@@ -89,7 +89,6 @@ const closeModal = () => {
           Nästa
         </button>
       </div>
-
     </div>
   </div>
 </template>
