@@ -10,6 +10,7 @@
 - ESLint
 - Java
 - Spring Boot
+- MySQL
 
 ## About this project
 
