@@ -2,7 +2,7 @@ package se.carolinevarsaga.demoproject.vue_java_app.service;
 
 import se.carolinevarsaga.demoproject.vue_java_app.dto.EmployeeDto;
 import se.carolinevarsaga.demoproject.vue_java_app.dto.EmployeeStatsDto;
-import se.carolinevarsaga.demoproject.vue_java_app.mock.MockEmployees;
+import se.carolinevarsaga.demoproject.vue_java_app.repository.EmployeeRepository;
 import se.carolinevarsaga.demoproject.vue_java_app.model.Employee;
 
 import org.springframework.stereotype.Service;
@@ -13,8 +13,16 @@ import java.time.LocalDate;
 
 @Service
 public class EmployeeService {
+  private final EmployeeRepository employeeRepository;
+
+  public EmployeeService(EmployeeRepository employeeRepository) {
+    this.employeeRepository = employeeRepository;
+  }
+
   public List<EmployeeDto> findAll() {
-    return MockEmployees.getMockEmployees().stream()
+    List<Employee> activeEmployees = employeeRepository.findByIsDeletedFalse();
+
+    return activeEmployees.stream()
         .map(this::mapToDto)
         .toList();
   }
@@ -25,7 +33,7 @@ public class EmployeeService {
         employee.getFirstName(),
         employee.getLastName(),
         employee.getPosition(),
-        employee.getCreatedAt());
+        employee.getHireDate());
   }
 
   public EmployeeStatsDto getStatistics() {
@@ -36,7 +44,7 @@ public class EmployeeService {
         .collect(Collectors.groupingBy(EmployeeDto::position, Collectors.counting()));
 
     long last30days = all.stream()
-        .filter(e -> e.createdAt().isAfter(LocalDate.now().minusDays(30)))
+        .filter(e -> e.hireDate().isAfter(LocalDate.now().minusDays(30)))
         .count();
 
     List<String> top5 = perPosition.entrySet().stream()
