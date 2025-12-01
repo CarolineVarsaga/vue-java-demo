@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
 import type { IEmployee } from "../models/Employee";
 
 const props = defineProps<{
