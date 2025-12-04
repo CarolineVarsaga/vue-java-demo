@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/stats")
+@RequiredArgsConstructor
 public class EmployeeStatsController {
 
   private final EmployeeService employeeService;
-
-  public EmployeeStatsController(EmployeeService employeeService) {
-    this.employeeService = employeeService;
-  }
 
   @GetMapping
   public EmployeeStatsDto getStats() {
